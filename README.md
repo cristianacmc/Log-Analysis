@@ -46,6 +46,7 @@ For this project I created 3 views to solve the queries **3**. Create these view
 If the commands above give an error message such as:
 - psql: FATAL: database "news" does not exist
 - psql: could not connect to server: Connection refused
+
 This means the database server is not running or is not set up correctly. If you have an older version of the VM configuration you need to download the virtual machine configuration into a new directory and start it from there.
 
 
