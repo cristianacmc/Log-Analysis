@@ -18,6 +18,8 @@ In order to run this project, you need to follow these steps:
 - Install virtual machine [VM](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1) and [Vagrant](https://www.vagrantup.com/)
 - Download the file newsdata.sql and unzip into the vagrant directory (*file provided by Udacity*)
 - cd /vagrant
+- git clone https://github.com/cristianacmc/Log-Analysis.git
+- cd Log-Analysis
 - Bring the virtual machine online (with *vagrant up*) and then log into it with *vagrant ssh*.
 - load the data: *psql -d news -f newsdata.sql*
 - Connect to the database : psql news
@@ -28,9 +30,9 @@ In order to run this project, you need to follow these steps:
 After that you need to load the data into your local database:
 - cd into the vagrant directory *psql -d news -f newsdata.sql*
 
-## Required Code
+## Addictional Code
 
-For this project I created 3 views to solve the queries **3**. Create these views in the psql console before running the project:
+For this project I created 3 views to solve the querie **3**: 
 
 - View 1:
 	create view access as select date(time) as tdate, count(*) as views from log GROUP BY date(time) ORDER BY date(time);
@@ -40,6 +42,8 @@ For this project I created 3 views to solve the queries **3**. Create these view
 
 - View 3:	
     create view percent as select lerrors.edate, cast(errors * 100 as double precision) / views as p from access, lerrors where access.tdate = lerrors.edate;
+
+FYI: **You do not need to create these views in the psql console because it is already implemented in the script**
 
 ## Possible Errors
 
