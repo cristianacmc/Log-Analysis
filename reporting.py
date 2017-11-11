@@ -13,9 +13,13 @@ def most_article():
 
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
-    c.execute("select articles.title, count(log.path) as views from articles, log \
-        where log.path like '%'||articles.slug group by articles.title \
-        order by views desc limit 3")
+    c.execute("""
+        select articles.title, count(log.path) as views
+        from articles, log
+        where log.path like '%'||articles.slug
+        group by articles.title
+        order by views desc limit 3
+        """)
     rows = c.fetchall()
 
     print("***The most popular three articles of all time***")
@@ -31,13 +35,18 @@ def most_article():
 
 def most_authors():
     """ This function uses the tables article, authors and log
-    to return the most accessed article authors """
+    to return the most accessed article authors based on article views"""
 
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
-    c.execute("select authors.name, count(log.path) as views from authors, log, \
-        articles where log.path like '%'||articles.slug and articles.author = \
-        authors.id group by authors.name order by views desc")
+    c.execute("""
+        select authors.name, count(log.path) as views
+        from authors, log, articles
+        where log.path like '%'||articles.slug
+        and articles.author = authors.id
+        group by authors.name
+        order by views desc;
+        """)
     rows = c.fetchall()
 
     print("***The most popular article authors of all time***")
@@ -57,13 +66,29 @@ def percent_errors():
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
 
-    c.execute("create view access as select date(time) as tdate, count(*) as views \
-        from log GROUP BY date(time) ORDER BY date(time)")
-    c.execute("create view lerrors as select date(time) as edate, count(*) as errors from \
-        log where status like '%4%' group by time::date order by date(time)")
-    c.execute("create view percent as select lerrors.edate, cast(errors * 100 \
-        as double precision) / views as p from access, lerrors \
-        where access.tdate = lerrors.edate")
+    c.execute("""
+        create view access as select date(time) as tdate,
+        count(*) as views
+        from log
+        GROUP BY date(time)
+        ORDER BY date(time);
+        """)
+    c.execute("""
+        create view lerrors as select date(time) as edate,
+        count(*) as errors
+        from log
+        where status like '%4%'
+        group by time::date
+        order by date(time);
+        """)
+    c.execute("""
+        create view percent as
+        select lerrors.edate,
+        cast(errors * 100 as double precision) / views as p
+        from access, lerrors
+        where access.tdate = lerrors.edate;
+        """)
+
     c.execute("select * from percent where p > 1 ")
     rows = c.fetchall()
 
