@@ -16,7 +16,7 @@ def most_article():
     c.execute("""
         SELECT articles.title, count(log.path) AS VIEWs
         FROM articles, log
-        WHERE log.path LIKE '%'||articles.slug
+        WHERE log.path = '/article/' || articles.slug
         GROUP BY articles.title
         ORDER BY VIEWs DESC LIMIT 3
         """)
@@ -42,7 +42,7 @@ def most_authors():
     c.execute("""
         SELECT authors.name, count(log.path) AS views
         FROM authors, log, articles
-        WHERE log.path LIKE '%'||articles.slug
+        WHERE log.path = '/article/' || articles.slug
         AND articles.author = authors.id
         GROUP BY authors.name
         ORDER BY views DESC;
