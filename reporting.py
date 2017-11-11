@@ -8,6 +8,8 @@ DBNAME = "news"
 
 
 def most_article():
+    """ This function uses the tables article and log
+    to return the most accessed articles """
 
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
@@ -23,10 +25,13 @@ def most_article():
 
     db.close()
 
+
 '''2. Who are the most popular article authors of all time? '''
 
 
 def most_authors():
+    """ This function uses the tables article, authors and log
+    to return the most accessed article authors """
 
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
@@ -47,6 +52,7 @@ def most_authors():
 
 
 def percent_errors():
+    """ It retuns the day with more than 1% requests errors """
 
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
@@ -71,6 +77,8 @@ def percent_errors():
 
 
 if __name__ == "__main__":
+    """ Call the three functions and show the results """
+
     most_article()
     most_authors()
     percent_errors()
