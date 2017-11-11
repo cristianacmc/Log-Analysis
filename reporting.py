@@ -64,7 +64,7 @@ def percent_errors():
     print("***Days with more than 1% requests errors***")
     for row in rows:
         print("%s - %s%% errors" % (row[0].strftime('%B %d, %Y'),
-            round(row[1], 2)))
+              round(row[1], 2)))
     print(" \n ")
 
     db.close()
