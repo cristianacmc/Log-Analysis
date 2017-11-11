@@ -14,7 +14,7 @@ def most_article():
     db = psycopg2.connect(database=DBNAME)
     c = db.cursor()
     c.execute("""
-        SELECT articles.title, count(log.path) AS VIEWs
+        SELECT articles.title, count(log.path) AS views
         FROM articles, log
         WHERE log.path = '/article/' || articles.slug
         GROUP BY articles.title
@@ -23,8 +23,8 @@ def most_article():
     rows = c.fetchall()
 
     print("***The most popular three articles of all time***")
-    for row in rows:
-        print("\" %s \" - %s views" % (row[0], row[1]))
+    for title, views in rows:
+        print('"{}" - {} views'.format(title, views))
     print(" \n ")
 
     db.close()
@@ -50,8 +50,8 @@ def most_authors():
     rows = c.fetchall()
 
     print("***The most popular article authors of all time***")
-    for row in rows:
-        print("%s - %s views" % (row[0], row[1]))
+    for name, views in rows:
+        print('{} - {} views'.format(name, views))
     print(" \n ")
 
     db.close()
@@ -94,8 +94,7 @@ def percent_errors():
 
     print("***Days with more than 1% requests errors***")
     for row in rows:
-        print("%s - %s%% errors" % (row[0].strftime('%B %d, %Y'),
-              round(row[1], 2)))
+        print('{0:%B %d, %Y} - {1:.2f}% errors'.format(row[0], row[1]))
     print(" \n ")
 
     db.close()

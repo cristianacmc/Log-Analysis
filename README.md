@@ -36,7 +36,7 @@ For this project I created 3 views to solve the querie **3**:
 	SELECT date(time) AS tdate, count(*) AS views
 	FROM log
 	GROUP BY date(time)
-    ORDER BY date(time);
+        ORDER BY date(time);
 ```
 
 - View 2:
