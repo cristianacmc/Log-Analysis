@@ -32,17 +32,29 @@ For this project I created 3 views to solve the querie **3**:
 
 - View 1:
 ```sql
-	create view access as select date(time) as tdate, count(*) as views from log GROUP BY date(time) ORDER BY date(time);
+	CREATE VIEW access AS
+	SELECT date(time) AS tdate, count(*) AS views
+	FROM log
+	GROUP BY date(time)
+    ORDER BY date(time);
 ```
 
 - View 2:
 ```sql
-	create view lerrors as select date(time) as edate, count(*) as errors from log where status like '%4%' group by time::date order by date(time);
+	CREATE VIEW lerrors AS
+	SELECT date(time) as edate, count(*) AS errors
+	FROM log
+	WHERE status like '%4%'
+	GROUP BY time::date
+	ORDER BY date(time);
 ```
 
 - View 3:
 ```sql
-    create view percent as select lerrors.edate, cast(errors * 100 as double precision) / views as p from access, lerrors where access.tdate = lerrors.edate;
+    CREATE VIEW percent AS
+    SELECT lerrors.edate, cast(errors * 100 as double precision) / views AS p
+    FROM access, lerrors
+    WHERE access.tdate = lerrors.edate;
 ```
 
 FYI: **You do not need to create these views in the psql console because it is already implemented in the script**
