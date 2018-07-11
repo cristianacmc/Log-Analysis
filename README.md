@@ -1,11 +1,10 @@
-# Logs Analysis
-
+# Logs Analysis Project
+---
 
 ## Overview
 
-The purpose of this project is to build a reporting tool to analyse data from the database in order to answer questions about the site's user activity.
-
-The report needs to anwer the following questions:
+For this project I was asked to build an internal reporting tool that will use information from a newspaper database site to discover what kind of articles the site's readers like.
+The database contains newspaper articles, as well as the web server log for the site. Using that information, your code will answer the following questions about the site's user activity:
 
 - What are the most popular three articles of all time?
 - Who are the most popular article authors of all time?
@@ -36,7 +35,7 @@ For this project I created 3 views to solve the querie **3**:
 	SELECT date(time) AS tdate, count(*) AS views
 	FROM log
 	GROUP BY date(time)
-        ORDER BY date(time);
+    ORDER BY date(time);
 ```
 
 - View 2:
